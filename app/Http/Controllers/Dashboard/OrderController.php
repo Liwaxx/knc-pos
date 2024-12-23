@@ -320,7 +320,7 @@ class OrderController extends Controller
 
             curl_close($curl);
 
-            return Redirect::route('order.completeOrders', $order_id)->with('success', 'Invoice berhasil dikirim ke WhatsApp!');
+            return Redirect::route('order.completeOrders')->with('success', 'Invoice berhasil dikirim ke WhatsApp!');
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

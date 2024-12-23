@@ -290,7 +290,7 @@ class OrderController extends Controller
             // Generate invoice image
             $fileUrl = $this->generateInvoiceImage($id);
 
-            // dd($fileUrl);
+            dd($fileUrl);
             // Format nomor WhatsApp
             $formattedNumber = preg_replace('/^0/', '+62', $customer_number);
 

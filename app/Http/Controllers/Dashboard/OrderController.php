@@ -122,7 +122,7 @@ class OrderController extends Controller
         // Delete Cart Sopping History
         Cart::destroy();
 
-        return Redirect::route('dashboard')->with('success', 'Order has been created!');
+        return Redirect::route('order.invoiceDownload', $order_id)->with('success', 'Order has been created!');
     }
 
     /**
@@ -238,93 +238,6 @@ class OrderController extends Controller
         return Redirect::route('order.pendingDue')->with('success', 'Due Amount Updated Successfully!');
     }
 
-    // public function generateInvoiceImage($id)
-    // {
-    //     $fileName = "invoice_$id.png";
-
-    //     // Tentukan path lengkap ke public storage
-    //     $path = public_path('storage/' . $fileName);
-
-    //     // URL yang akan diakses di API eksternal
-    //     // $url = 'https://api.ryzendesu.vip/api/tool/ssweb?url='.'https://b7ad-2001-448a-c0a0-dc6-5c9e-8b46-dda-95b.ngrok-free.app/orders/invoice/invoice-page/'.$id.'&mode=full';
-        
-    //     // Mengencode URL yang akan diproses
-    //     // $encodedUrl = route('order.invoicePage', $id);
-    //     // $encodedUrl = urlencode('https://b7ad-2001-448a-c0a0-dc6-5c9e-8b46-dda-95b.ngrok-free.app/orders/invoice/invoice-page/6');
-        
-    //     // URL yang akan diakses
-    //     $url = 'https://api.ryzendesu.vip/api/tool/ssweb?url=https%3A%2F%2Fb7ad-2001-448a-c0a0-dc6-5c9e-8b46-dda-95b.ngrok-free.app%2Forders%2Finvoice%2Finvoice-page%2F6&mode=full';
-
-    //     // Inisialisasi cURL
-    //     $ch = curl_init();
-
-    //     curl_setopt($ch, CURLOPT_URL, urldecode($url));
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    //         'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
-    //         'Accept: image/png',
-    //     ]);
-
-    //     $response = curl_exec($ch);
-
-    //     // Cek apakah ada error
-    //     if(curl_errno($ch)) {
-    //         echo 'Error:' . curl_error($ch); // Tampilkan error jika ada
-    //     } else {
-    //         $filePath = public_path("storage/invoice_$id.png");
-    //         file_put_contents($filePath, $response);
-    //         dd($response);
-    //     }
-
-    //     // Tutup cURL
-    //     curl_close($ch);
-    //     return $fileName;
-    // }
-
-    // public function sendToWhatsApp($id,$customer_number)
-    // {
-    //     $formattedNumber = str_replace('0', '+62', $customer_number);
-    //     $fileName = $this->generateInvoiceImage($id);
-    //     $fileUrl = asset('storage/' . $fileName);
-
-    //     // Kirim file gambar ke API WhatsApp
-    //     $curl = curl_init();
-
-    //     curl_setopt_array($curl, array(
-    //             CURLOPT_URL => 'https://app.wapanels.com/api/create-message',
-    //             CURLOPT_RETURNTRANSFER => true,
-    //             CURLOPT_ENCODING => '',
-    //             CURLOPT_MAXREDIRS => 10,
-    //             CURLOPT_TIMEOUT => 0,
-    //             CURLOPT_FOLLOWLOCATION => true,
-    //             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //             CURLOPT_CUSTOMREQUEST => 'POST',
-    //             CURLOPT_POSTFIELDS => array(
-    //             'appkey' => '686962f0-ca15-4121-a1f4-20696d29c7a6',
-    //             'authkey' => 'YioPWIu2V82ekiMRXljHNj11XAUhwrjqzcKrQ0pl4thypzp1MY',
-    //             'to' => $formattedNumber,
-    //             'message' => 'Terima kasih telah ngopi di KNC. Berikut adalah Inovoice anda.',
-    //             'file' => $fileUrl,
-    //             'sandbox' => 'false'
-    //         ),
-    //     ));
-
-    //     $response = curl_exec($curl);
-    //     curl_close($curl);
-
-    //     // Hapus file sementara setelah pengiriman berhasil
-    //     $this->cleanup(storage_path("app/public/$fileName"));
-    //     // dd($response);
-    //     return $response->json();
-    // }
-
-    // public function cleanup($path)
-    // {
-    //     if (file_exists($path)) {
-    //         unlink($path);
-    //     }
-    // }
-
     public function postImg($img) {
         Config::instance('cloudinary://443434587856543:6TqAFFTUDJE761TJCGhNCNEK12E@dakzsoxtt?secure=true');
         $uploadAPI = new UploadApi();
@@ -340,10 +253,10 @@ class OrderController extends Controller
         $fileName = "invoice_$id.png";
         $path = public_path('storage/' . $fileName);
 
-        $urlEncoded = urlencode('https://fz4rmdqx-8000.asse.devtunnels.ms/orders/invoice/invoice-page/'.$id);
+        $urlEncoded = urlencode(config('app.url').'/orders/invoice/invoice-page/'.$id);
 
         // URL API untuk mengambil screenshot
-        $url = 'https://api.ryzendesu.vip/api/tool/ssweb?url='.$urlEncoded.'&mode=full';
+        $url = 'https://api.ryzendesu.vip/api/tool/ssweb?url='.$urlEncoded.'&mode=tablet';
 
         // Inisialisasi cURL
         $ch = curl_init();

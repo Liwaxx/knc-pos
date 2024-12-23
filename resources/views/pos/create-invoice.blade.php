@@ -34,8 +34,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="payment_status">Payment</label>
-                                                    <select class="form-control @error('payment_status') is-invalid @enderror" name="payment_status">
-                                                        <option selected="" disabled="">-- Select Payment --</option>
+                                                    <select selected="QRIS" class="form-control @error('payment_status') is-invalid @enderror" name="payment_status">
                                                         <option value="Tunai">Tunai</option>
                                                         <option value="QRIS">QRIS</option>
                                                     </select>

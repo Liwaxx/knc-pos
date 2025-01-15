@@ -11,13 +11,7 @@
                     </div>
 
                     <div class="invoice-btn d-flex">
-                        <form action="{{ route('pos.printInvoice') }}" method="post">
-                            @csrf
-                            <input type="hidden" name="phone" value="{{ $customer->phone }}">
-                            <button type="submit" class="btn btn-primary-dark mr-2"><i class="las la-print"></i> Print</button>
-                        </form>
-
-                        <button type="button" class="btn btn-primary-dark mr-2" data-toggle="modal" data-target=".bd-example-modal-lg">Create</button>
+                        <button type="button" class="btn btn-primary-dark mr-2" data-toggle="modal" data-target=".bd-example-modal-lg">Create Order</button>
 
                         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-lg">

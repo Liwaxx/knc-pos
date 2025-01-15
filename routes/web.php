@@ -114,8 +114,7 @@ Route::middleware(['permission:orders.menu'])->group(function () {
     Route::get('/orders/details/{order_id}', [OrderController::class, 'orderDetails'])->name('order.orderDetails');
     Route::put('/orders/update/status', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
     Route::get('/orders/invoice/download/{order_id}', [OrderController::class, 'invoiceDownload'])->name('order.invoiceDownload');
-    Route::get('/orders/invoice/sendToWhatsApp/{order_id}/{customer_number}', [OrderController::class, 'sendToWhatsApp'])->name('order.sendToWhatsApp');
-
+    Route::post('/orders/invoice/sendToWhatsApp', [OrderController::class, 'sendToWhatsApp'])->name('order.sendToWhatsApp');
 
     // Pending Due
     Route::get('/pending/due', [OrderController::class, 'pendingDue'])->name('order.pendingDue');

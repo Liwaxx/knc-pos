@@ -238,62 +238,30 @@ class OrderController extends Controller
         return Redirect::route('order.pendingDue')->with('success', 'Due Amount Updated Successfully!');
     }
 
-    public function postImg($img) {
-        Config::instance('cloudinary://443434587856543:6TqAFFTUDJE761TJCGhNCNEK12E@dakzsoxtt?secure=true');
+    public function postPDF($file) {
+        Config::instance('cloudinary://276467372732785:rNNU3kFcL9KsIQq78QBf9BGiSKg@drqp4prsl?secure=true');
         $uploadAPI = new UploadApi();
-        $response = $uploadAPI->upload($img, [
+        $response = $uploadAPI->upload($file->getRealPath(), [
             'use_filename' => true,
             'folder' => 'KNC',
         ]);
-        return $response;
+        return $response['secure_url'];
     }
 
-    public function generateInvoiceImage($id)
+    public function sendToWhatsApp(Request $request)
     {
-        $fileName = "invoice_$id.png";
-        $path = public_path('storage/' . $fileName);
+        $customer_phone = $request->customer_phone;
+        $customer_name = $request->customer_name;
+        $formatted_number = preg_replace('/^0/', '+62', $customer_phone);
+        $message = "🐉☕ Ni hao ".$customer_name."! ☕🐉\n\nTerima kasih telah memilih KOPI NAGA CINA sebagai teman perjalanan rasa Anda!\nBerikut kami lampirkan invoice untuk pesanan Anda. Mohon dicek, ya~ Kalau ada pertanyaan, jangan sungkan menghubungi kami! \n\n Salam hangat, \n Tim KOPI NAGA CINA ❤️ ";
+ 
+        // Ambil file
+        $file = $request->file('file');
+        // up ke cloudinary
+        $fileURL = $this->postPDF($file);
 
-        $urlEncoded = urlencode(config('app.url').'/orders/invoice/invoice-page/'.$id);
-
-        // URL API untuk mengambil screenshot
-        $url = 'https://api.ryzendesu.vip/api/tool/ssweb?url='.$urlEncoded.'&mode=tablet';
-
-        // Inisialisasi cURL
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, urldecode($url));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
-            'Accept: image/png',
-        ]);
-
-        $response = curl_exec($ch);
-        // Cek apakah ada error
-        if (curl_errno($ch)) {
-            $error = curl_error($ch);
-            curl_close($ch);
-            throw new \Exception("Error generating invoice image: $error");
-        }
-
-        file_put_contents($path, $response);
-        $cloudinaryResponse = $this->postImg(storage_path('app/public/' . $fileName));
-
-        curl_close($ch);
-
-        return $cloudinaryResponse;
-    }
-
-    public function sendToWhatsApp($id, $customer_number)
-    {
+        // Kirim ke WhatsApp
         try {
-            // Generate invoice image
-            $fileUrl = $this->generateInvoiceImage($id);
-
-            dd($fileUrl);
-            // Format nomor WhatsApp
-            $formattedNumber = preg_replace('/^0/', '+62', $customer_number);
-
             // Kirim file ke API WhatsApp
             $curl = curl_init();
             curl_setopt_array($curl, [
@@ -303,9 +271,9 @@ class OrderController extends Controller
                 CURLOPT_POSTFIELDS => [
                     'appkey' => '686962f0-ca15-4121-a1f4-20696d29c7a6',
                     'authkey' => 'YioPWIu2V82ekiMRXljHNj11XAUhwrjqzcKrQ0pl4thypzp1MY',
-                    'to' => $formattedNumber,
-                    'message' => 'Terima kasih telah ngopi di KNC. Berikut adalah Inovoice anda.',
-                    'file' => $fileUrl['url'],
+                    'to' => $formatted_number,
+                    'message' => $message,
+                    'file' => $fileURL,
                     'sandbox' => 'false',
                 ],
             ]);

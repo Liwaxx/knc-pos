@@ -80,7 +80,7 @@
                                 @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="buying_price">Buying Price <span class="text-danger">*</span></label>
+                                <label for="buying_price">Buying Price (HPP) <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('buying_price') is-invalid @enderror" id="buying_price" name="buying_price" value="{{ old('buying_price') }}" required>
                                 @error('buying_price')
                                 <div class="invalid-feedback">

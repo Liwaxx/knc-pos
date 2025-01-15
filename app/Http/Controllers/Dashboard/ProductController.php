@@ -129,11 +129,7 @@ class ProductController extends Controller
             'product_image' => 'image|file|max:1024',
             'product_name' => 'required|string',
             'category_id' => 'required|integer',
-            'supplier_id' => 'required|integer',
-            'product_garage' => 'string|nullable',
             'product_store' => 'string|nullable',
-            'buying_date' => 'date_format:Y-m-d|max:10|nullable',
-            'expire_date' => 'date_format:Y-m-d|max:10|nullable',
             'buying_price' => 'required|integer',
             'selling_price' => 'required|integer',
         ];

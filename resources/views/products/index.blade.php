@@ -26,11 +26,11 @@
                     <p class="mb-0">A product dashboard lets you easily gather and visualize product data from optimizing <br>
                         the product experience, ensuring product retention. </p>
                 </div>
-                <div>
+                <!-- <div>
                 <a href="{{ route('products.importView') }}" class="btn btn-success add-list">Import</a>
                 <a href="{{ route('products.exportData') }}" class="btn btn-warning add-list">Export</a>
                 <a href="{{ route('products.create') }}" class="btn btn-primary add-list">Add Product</a>
-                </div>
+                </div> -->
             </div>
         </div>
 

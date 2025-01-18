@@ -253,7 +253,7 @@ class OrderController extends Controller
         $customer_phone = $request->customer_phone;
         $customer_name = $request->customer_name;
         $formatted_number = preg_replace('/^0/', '+62', $customer_phone);
-        $message = "🐉☕ Ni hao ".$customer_name."! ☕🐉\n\nTerima kasih telah memilih KOPI NAGA CINA sebagai teman perjalanan rasa Anda!\nBerikut kami lampirkan invoice untuk pesanan Anda. Mohon dicek, ya~ Kalau ada pertanyaan, jangan sungkan menghubungi kami! \n\n Salam hangat, \n Tim KOPI NAGA CINA ❤️ ";
+        $message = "🐉☕ Ni hao ".$customer_name."! ☕🐉\n\nTerima kasih telah memilih KOPI NAGA CINA sebagai teman perjalanan rasa Anda!\nBerikut kami lampirkan invoice untuk pesanan Anda. Mohon dicek, ya~ Kalau ada pertanyaan, jangan sungkan menghubungi kami! \n\n Kritik dan saran : \n https://forms.gle/Uofncx3HXcFJ5bh29 \n\n Salam hangat, \n Tim KOPI NAGA CINA ❤️ ";
  
         // Ambil file
         $file = $request->file('file');

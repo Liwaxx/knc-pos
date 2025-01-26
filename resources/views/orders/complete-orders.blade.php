@@ -16,9 +16,9 @@
                 <div>
                     <h4 class="mb-3">Complete Order List</h4>
                 </div>
-                <div>
+                <!-- <div>
                     <a href="{{ route('order.pendingOrders') }}" class="btn btn-danger add-list"><i class="fa-solid fa-trash mr-3"></i>Clear Search</a>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -37,7 +37,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <label class="control-label col-sm-3 align-self-center" for="search">Search:</label>
                         <div class="col-sm-8">
                             <div class="input-group">
@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </form>
         </div>

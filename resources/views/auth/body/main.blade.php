@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/remixicon/fonts/remixicon.css') }}">
+        @yeld('select2')
     </head>
 <body>
     <!-- loader Start -->
@@ -32,10 +33,8 @@
 
     <!-- Backend Bundle JavaScript -->
     <script src="{{ asset('assets/js/backend-bundle.min.js') }}"></script>
-
-    @yield('specificpagescripts')
-
     <!-- App JavaScript -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    @yield('specificpagescripts')
 </body>
 </html>

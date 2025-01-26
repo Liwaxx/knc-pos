@@ -1,5 +1,10 @@
 @extends('dashboard.body.main')
 
+@section('select2')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endsection
+
+
 @section('container')
 <div class="container-fluid">
 
@@ -70,9 +75,6 @@
                 <div class="form-group col-sm-4">
                     <p class="h4 text-primary">Subtotal: {{ number_format(Cart::subtotal()) }}</p>
                 </div>
-                <!-- <div class="form-group col-sm-6">
-                    <p class="h4 text-primary">Vat: {{ Cart::tax() }}</p>
-                </div> -->
                 <div class="form-group col-sm-">
                     <p class="h4 text-primary">Total: {{ number_format(Cart::total()) }}</p>
                 </div>
@@ -84,7 +86,12 @@
                         <div class="row align-items-center w-100">
                             <div class="form-group col-6">
                                 <label for="name">Customer Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
+                                <!-- <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required> -->
+                                <select id="customers-select" class="customer-select form-control @error('name') is-invalid @enderror" style="height: 32px;" name="name">
+                                    @foreach($customers as $customer)
+                                        <option value="{{ $customer->phone }}">{{ $customer->name }}</option>
+                                    @endforeach
+                                </select>
                                 @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -93,7 +100,7 @@
                             </div>
                             <div class="form-group col-6">
                                 <label for="phone">Customer Phone <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}" required>
+                                <input type="text" id="customer-phone" class="form-control @error('phone') is-invalid @enderror" style="height: 32px;" id="phone" name="phone" value="{{ old('phone') }}" required>
                                 @error('phone')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -191,4 +198,25 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('specificpagescripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function() {
+        $('.customer-select').select2({
+            placeholder: 'Select Customer',
+            allowClear: true,
+            tags: true
+        });
+        $("#customers-select").val('').trigger('change');
+
+        $('#customers-select').on('change', function() {
+            let selectedValue = $(this).val();
+            if (selectedValue && selectedValue.includes('08')) {
+                $('#customer-phone').val(selectedValue);
+            }
+        });
+    });
+</script>
 @endsection

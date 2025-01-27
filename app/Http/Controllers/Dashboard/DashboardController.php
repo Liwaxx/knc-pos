@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function index(){
         $topSelling = DB::table('order_details')
         ->join('products', 'order_details.product_id', '=', 'products.id') // Join dengan tabel products
-        ->select('order_details.product_id', 'products.product_name', DB::raw('COUNT(order_details.product_id) as quantity')) // Pilih kolom yang diperlukan
+        ->select('order_details.product_id', 'products.product_name', DB::raw('SUM(order_details.quantity) as quantity')) // Pilih kolom yang diperlukan
         ->groupBy('order_details.product_id', 'products.product_name') // Pastikan semua kolom non-aggregat disertakan dalam GROUP BY
         ->orderBy('quantity', 'DESC') // Urutkan berdasarkan total
         ->take(5) // Ambil 5 produk terlaris

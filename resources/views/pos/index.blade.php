@@ -215,6 +215,8 @@
             let selectedValue = $(this).val();
             if (selectedValue && selectedValue.includes('08')) {
                 $('#customer-phone').val(selectedValue);
+            } else {
+                $('#customer-phone').val('');
             }
         });
     });

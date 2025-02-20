@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-        <title>POS Dash | Responsive Bootstrap 4 Admin Dashboard Template</title>
+        <title>Kopi Naga Cina POS</title>
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}"/>
@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{{ asset('assets/vendor/@fortawesome/fontawesome-free/css/all.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendor/remixicon/fonts/remixicon.css') }}">
-        @yeld('select2')
+        @yield('select2')
     </head>
 <body>
     <!-- loader Start -->
